@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Check</title>
+</head>
+<body>
+
+<input type="password" id="password" placeholder="Enter password">
+<button onclick="checkPassword()">Submit</button>
+
+<br><br>
+
+<a href="home_pagr.html" id="secretLink" style="display:none;">
+    <button>Go to patiant registration</button>
+</a>
+
+<script>
+function checkPassword() {
+    const password = document.getElementById("password").value;
+
+    if (password === "1234") {
+        document.getElementById("secretLink").style.display = "inline";
+    } else {
+        alert("Incorrect password.");
+    }
+}
+</script>
+
+</body>
+</html>

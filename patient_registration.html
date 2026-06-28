@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lakshmi Abha Eye Care Wellness enter</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f8fb;
+}
+
+header{
+    background:#0077b6;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+nav{
+    background:#023e8a;
+    display:flex;
+    justify-content:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:15px 25px;
+}
+
+nav a:hover{
+    background:#0077b6;
+}
+
+.hero {
+    background-color: #ff8c00; /* Dark Orange */
+    color: white;
+    text-align: center;
+    padding: 80px;
+}
+
+.container{
+    width:95%;
+    max-width:1400px;
+    margin:auto;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+h2{
+    margin-bottom:20px;
+    color:#0077b6;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    background:#0077b6;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#023e8a;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+table th,table td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+table th{
+    background:#0077b6;
+    color:white;
+}
+a
+.deleteBtn{
+    background:red;
+}
+
+footer{
+    margin-top:40px;
+    background:#023e8a;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>🏥 Laxmi Abha Eye Care Wellness Center</h1>
+<p>Your Vision Our Priority</p>
+</header>
+
+<nav>
+<a href="home_page.html">Home</a>
+<a href="about_doctor.html">About Doctor</a>
+<a href="gallery.html">Gallery</a>
+<a href="login.html">Patient Registration</a>
+<a href="login.html">Patients</a>
+</nav>
+
+<section class="hero">
+<h1>Welcome to Lakshmi Abha Eye Care Wellness Center</h1>
+<p>Modern Healthcare | Expert Doctors | 24/7 Emergency</p>
+</section>
+
+<div class="container">
+
+<div class="card" id="register">
+
+<h2>Patient Registration</h2>
+
+<form id="patientForm">
+
+<input type="text" id="name" placeholder="Patient Name" required>
+
+<input type="number" id="age" placeholder="Age" required>
+
+<select id="gender" required>
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<input type="text" id="phone" placeholder="Phone Number" required>
+
+<input type="text" id="disease" placeholder="Disease / Symptoms" required>
+
+<input type="text" id="address" placeholder="Address" required>
+
+<input type="number" id="opdFees" placeholder="OPD Fees (₹)" required>
+
+<input type="number" id="lensPrice" placeholder="Lens Price (₹)" value="0">
+
+<input type="number" id="framePrice" placeholder="Frame Price (₹)" value="0">
+
+<input type="text" id="frameBrand" placeholder="Frame Brand">
+
+<input type="number" id="medicinePrice" placeholder="Medicine Price (₹)" value="0">
+
+<input type="number" id="totalBill" placeholder="Total Bill (₹)" readonly>
+
+<button type="submit">Register Patient</button>
+
+</form>
+
+</div>
+
+<br>
+
+<div class="card" id="patients">
+
+<h2>Registered Patients</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Gender</th>
+<th>Phone</th>
+<th>Address</th>
+<th>Disease</th>
+<th>OPD Fees</th>
+<th>Lens Price</th>
+<th>Frame Price</th>
+<th>Frame Brand</th>
+<th>Medicine Price</th>
+<th>Total Bill</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="patientTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+<button onclick="exportToExcel()">Export Patients to Excel</button>
+
+<footer>
+© 2026 Lakshmi Abha Eye Care Wellness Center
+</footer>
+
+<script>
+
+let patients = JSON.parse(localStorage.getItem("patients")) || [];
+
+const form=document.getElementById("patientForm");
+const table=document.getElementById("patientTable");
+
+function displayPatients(){
+
+table.innerHTML="";
+
+patients.forEach((patient,index)=>{
+
+table.innerHTML += `
+<tr>
+
+<td>${patient.name}</td>
+<td>${patient.age}</td>
+<td>${patient.gender}</td>
+<td>${patient.phone}</td>
+<td>${patient.address}</td>
+<td>${patient.disease}</td>
+<td>₹${patient.opdFees}</td>
+<td>₹${patient.lensPrice}</td>
+<td>₹${patient.framePrice}</td>
+<td>${patient.frameBrand}</td>
+<td>₹${patient.medicinePrice}</td>
+<td><b>₹${patient.totalBill}</b></td>
+
+<td>
+<button class="deleteBtn" onclick="deletePatient(${index})">
+Delete
+</button>
+</td>
+
+</tr>
+`;
+
+});
+
+localStorage.setItem("patients",JSON.stringify(patients));
+
+}
+
+const opdFees = document.getElementById("opdFees");
+const lensPrice = document.getElementById("lensPrice");
+const framePrice = document.getElementById("framePrice");
+const medicinePrice = document.getElementById("medicinePrice");
+const totalBill = document.getElementById("totalBill");
+
+function calculateBill(){
+
+    let total =
+        Number(opdFees.value || 0) +
+        Number(lensPrice.value || 0) +
+        Number(framePrice.value || 0) +
+        Number(medicinePrice.value || 0);
+
+    totalBill.value = total;
+}
+
+opdFees.addEventListener("input", calculateBill);
+lensPrice.addEventListener("input", calculateBill);
+framePrice.addEventListener("input", calculateBill);
+medicinePrice.addEventListener("input", calculateBill);
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const patient={
+
+name:document.getElementById("name").value,
+age:document.getElementById("age").value,
+gender:document.getElementById("gender").value,
+phone:document.getElementById("phone").value,
+address:document.getElementById("address").value,
+disease:document.getElementById("disease").value,
+opdFees:document.getElementById("opdFees").value,
+lensPrice:document.getElementById("lensPrice").value,
+framePrice:document.getElementById("framePrice").value,
+frameBrand:document.getElementById("frameBrand").value,
+medicinePrice:document.getElementById("medicinePrice").value,
+totalBill:document.getElementById("totalBill").value
+
+};
+patients.push(patient);
+
+displayPatients();
+
+form.reset();
+totalBill.value = 0;
+
+alert("Patient Registered Successfully!");
+
+});
+
+function deletePatient(index){
+
+if(confirm("Delete this patient?")){
+
+patients.splice(index,1);
+
+displayPatients();
+
+}
+
+}
+
+displayPatients();
+
+function exportToExcel() {
+
+    if (patients.length === 0) {
+        alert("No patient records to export.");
+        return;
+    }
+
+   let csv =
+"Name,Age,Gender,Phone,Address,Disease,OPD Fees,Lens Price,Frame Price,Frame Brand,Medicine Price,Total Bill\n";
+
+  patients.forEach(patient => {
+
+csv += `"${patient.name}",
+"${patient.age}",
+"${patient.gender}",
+"${patient.phone}",
+"${patient.address}",
+"${patient.disease}",
+"${patient.opdFees}",
+"${patient.lensPrice}",
+"${patient.framePrice}",
+"${patient.frameBrand}",
+"${patient.medicinePrice}",
+"${patient.totalBill}"\n`;
+
+});
+
+    const blob = new Blob([csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "Patients.csv";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+</script>
+
+</body>
+</html>
